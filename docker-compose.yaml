@@ -1,0 +1,136 @@
+version: '3.3'
+
+volumes:
+  ckan:
+  solr:
+  postgres:
+
+networks:
+  ecs_demo_ckan_default:
+    external: true
+
+services:
+  redis:
+    platform: linux/amd64
+    container_name: redis
+    image: redis:latest
+    expose:
+    - 6379
+    ports:
+    - 6379:6379
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "redis-cli", "-e", "QUIT"]
+
+  postgres:
+    platform: linux/amd64
+    container_name: postgres
+    image: postgres:11.16-alpine
+    environment:
+    - POSTGRES_PASSWORD=fearless
+    - POSTGRES_USER=ckan_default
+    - POSTGRES_DB=ckan_default
+    - PGDATA=/var/lib/postgresql/data/
+    expose:
+    - 5433
+    ports:
+    - 0.0.0.0:5432:5432
+    volumes:
+    - postgres:/var/lib/postgresql/data/
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "ckan_default"]
+
+  datapusher:
+    platform: linux/amd64
+    container_name: datapusher
+    image: ckan-datapusher
+    build:
+      context: ./ckan-datapusher
+    expose:
+    - 8800
+    ports:
+    - 0.0.0.0:8800:8800
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8800"]
+
+  solr:
+    platform: linux/amd64
+    container_name: solr
+    image: ckan-solr
+    build:
+      context: ./ckan-solr
+    expose:
+    - 8983
+    ports:
+    - 0.0.0.0:8983:8983
+    volumes:
+    - solr:/opt/solr/server/solr/ckan/data/
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8983/solr/"]
+
+  ckan:
+    platform: linux/amd64
+    container_name: ckan
+    image: ckan
+    build:
+      context: ./ckan
+    expose:
+    - 5000
+    depends_on:
+      solr:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+    - 0.0.0.0:5000:5000
+    environment:
+    # Environment Specific
+    - CKAN_PORT=5000
+    - POSTGRES_FQDN=postgres
+    - REDIS_FQDN=redis
+    - SOLR_FQDN=solr
+    - DATAPUSHER_FQDN=datapusher
+    - CKAN_SITE_URL=http://0.0.0.0
+    #- CKAN_ROOT_PATH=/ckan/{{LANG}}
+    - CKAN_DATAPUSHER_CALLBACK_URL=http://0.0.0.0/ckan
+    #- CKAN_SMTP_ERROR_MAIL_TO=devops@example.com
+    #- CKAN_SMTP_ERROR_MAIL_FROM=errors@example.com
+    #- CKAN_SMTP_MAIL_FROM=admin@example.com
+    - SMTP_FQDN=smtp
+    - SMTP_PORT=1025
+    # Secrets
+    - APP_UUID=AAAAAAAA-0000-1111-2222-BBBBBBBBBBBB
+    - CKAN_API_TOKEN_SECRET=9OzsqKgYG4o_-6RGZ14ebdsh6
+    - CKAN_SMTP_PASSWORD=fake
+    - CKAN_SMTP_USER=fake
+    - POSTGRES_PASSWORD=fearless
+    - POSTGRES_USER=ckan_default
+    - POSTGRES_DB=ckan_default
+    - DATASTORE_DB=datastore
+    - DATASTORE_ROLENAME=datastore_ro
+    - DATASTORE_PASSWORD=datastore
+    - SESSION_SECRET=AAAAAAAAAAAAAAAAAAAAAAAAA
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+    volumes:
+    - ckan:/var/lib/ckan/
+
+  smtp:
+    platform: linux/amd64
+    image: reachfive/fake-smtp-server
+    expose:
+    - 1025
+    - 1080
+    ports:
+    - 0.0.0.0:1025:1025
+    - 0.0.0.0:1080:1080
+    command: ["node", "index.js", "--auth", "fake:fake"]
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
