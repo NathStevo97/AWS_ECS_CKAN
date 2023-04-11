@@ -23,12 +23,12 @@ resource "aws_security_group_rule" "ckan-to-datapusher" {
 
 
 resource "aws_security_group_rule" "elb-to-datapusher" {
-  description       = "elb-to-datapusher"
-  from_port         = 8800
-  protocol          = "-1"
-  security_group_id = aws_security_group.datapusher.id
-  to_port           = 8800
-  type              = "ingress"
+  description              = "elb-to-datapusher"
+  from_port                = 8800
+  protocol                 = "-1"
+  security_group_id        = aws_security_group.datapusher.id
+  to_port                  = 8800
+  type                     = "ingress"
   source_security_group_id = aws_security_group.elb.id
 }
 
@@ -57,6 +57,10 @@ resource "aws_ecs_service" "datapusher" {
       aws_security_group.datapusher.id
     ]
   }
+
+  depends_on = [
+    module.ecs
+  ]
 }
 
 resource "aws_ecs_task_definition" "datapusher" {
@@ -96,6 +100,9 @@ resource "aws_ecs_task_definition" "datapusher" {
 
   network_mode = "awsvpc"
 
-  depends_on = [aws_cloudwatch_log_group.datapusher]
+  depends_on = [
+    aws_cloudwatch_log_group.datapusher,
+    module.ecs
+  ]
 
 }

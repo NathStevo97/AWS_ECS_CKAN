@@ -39,7 +39,7 @@ module "rds" {
   # networking
   subnet_ids             = var.private_subnet_ids_list
   vpc_security_group_ids = [aws_security_group.rds.id]
-  publicly_accessible = true
+  publicly_accessible    = true
 
   # tags
   # new module version has added a new db_instance_tag attribute

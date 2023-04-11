@@ -65,7 +65,8 @@ resource "aws_ecs_service" "ckan" {
   depends_on = [
     aws_alb_listener.ckan-http,
     #aws_alb_listener.ckan-https,
-    aws_alb_listener.solr-http
+    aws_alb_listener.solr-http,
+    module.ecs
   ]
 
 
@@ -179,6 +180,6 @@ resource "aws_ecs_task_definition" "ckan" {
 
   network_mode = "awsvpc"
 
-  depends_on = [aws_cloudwatch_log_group.ckan]
+  depends_on = [aws_cloudwatch_log_group.ckan, module.ecs]
 
 }

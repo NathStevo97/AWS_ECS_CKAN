@@ -67,6 +67,6 @@ variable "ckan_admin_password" {
 */
 
 
-variable "acm_certificate_arn" {
+variable "lb_acm_certificate_arn" {
   type = string
 }

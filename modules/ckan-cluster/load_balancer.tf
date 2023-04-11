@@ -1,11 +1,16 @@
+data "aws_ec2_managed_prefix_list" "cloudwatch" {
+  name = "com.amazonaws.global.cloudfront.origin-facing"
+}
+
 resource "aws_security_group" "elb" {
   name = "${var.resource_name_prefix}-elb-sg"
 
   vpc_id = var.vpc_id
 
   ingress {
-    #cidr_blocks = var.admin_cidr_blocks
+    #cidr_blocks = var.allowed_cidr_blocks
     cidr_blocks = ["0.0.0.0/0"]
+    #prefix_list_ids = [ data.aws_ec2_managed_prefix_list.cloudwatch.id ]
     description = "http to ELB"
     from_port   = 80
     protocol    = "tcp"
@@ -13,8 +18,9 @@ resource "aws_security_group" "elb" {
   }
 
   ingress {
-    #cidr_blocks = var.admin_cidr_blocks
-    cidr_blocks = ["0.0.0.0/0"]
+    #cidr_blocks = var.allowed_cidr_blocks
+    #cidr_blocks = ["0.0.0.0/0"]
+    prefix_list_ids = [ data.aws_ec2_managed_prefix_list.cloudwatch.id ]
     description = "https to ELB"
     from_port   = 443
     protocol    = "tcp"
@@ -133,7 +139,7 @@ resource "aws_alb_listener" "ckan-https" {
   port              = "443"
   protocol          = "HTTPS"
 
-  certificate_arn = var.acm_certificate_arn
+  certificate_arn = var.lb_acm_certificate_arn
 
 
   default_action {
@@ -142,11 +148,4 @@ resource "aws_alb_listener" "ckan-https" {
   }
 
   depends_on = [aws_alb_target_group.ckan-http]
-}
-output "load_balancer_dns" {
-  value = aws_alb.application-load-balancer.dns_name
-}
-
-output "load_balancer_arn" {
-  value = aws_alb.application-load-balancer.arn
 }

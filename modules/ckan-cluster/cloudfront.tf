@@ -567,13 +567,56 @@ resource "aws_cloudfront_distribution" "distribution" {
   }
 
   viewer_certificate {
-    acm_certificate_arn            = "arn:aws:acm:us-east-1:862772511843:certificate/1fc475d3-4684-4411-972f-d3ef8a8a3343"
+    acm_certificate_arn            = aws_acm_certificate.ckan_certificate.arn
     cloudfront_default_certificate = false
     minimum_protocol_version       = "TLSv1.1_2016"
     ssl_support_method             = "sni-only"
   }
 }
 
+resource "aws_route53_record" "route-to-cloudfront" {
+  zone_id = data.aws_route53_zone.zone.zone_id
+  name    = var.ckan_url
+  type    = "A"
+
+  alias {
+    evaluate_target_health = false
+    name                   = aws_cloudfront_distribution.distribution.domain_name
+    zone_id                = aws_cloudfront_distribution.distribution.hosted_zone_id
+  }
+}
+
+resource "aws_route53_record" "ckan_cloudfront_validation_record" {
+  for_each = {
+    for dvo in aws_acm_certificate.ckan_certificate.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+
+  zone_id = var.hosted_zone_id
+  name    = each.value.name
+  records = [each.value.record]
+  type    = each.value.type
+  ttl     = 60
+}
+
+resource "aws_acm_certificate" "ckan_certificate" {
+  provider = aws.us_east
+  domain_name       = var.ckan_url
+  validation_method = "DNS"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_acm_certificate_validation" "certificate_validation" {
+  provider = aws.us_east
+  certificate_arn         = aws_acm_certificate.ckan_certificate.arn
+  validation_record_fqdns = [for record in aws_route53_record.ckan_cloudfront_validation_record : record.fqdn]
+}
 
 
 resource "aws_s3_bucket" "cloudfront_logs" {
