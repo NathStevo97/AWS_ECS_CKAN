@@ -26,7 +26,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v4
       with:
-        images: ${{ DOCKERHUB_USERNAME }}/ckan-datapusher
+        images: ${{ secrets.DOCKERHUB_USERNAME }}/ckan-datapusher
         tags: |
           type=raw,value={{date 'YYYYMMDD'}}
 
