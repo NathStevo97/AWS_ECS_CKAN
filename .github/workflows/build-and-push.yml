@@ -22,11 +22,23 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
       
-    - name: Build the Datapusher Docker image
-      run: docker build ./ckan-datapusher --tag ${{ secrets.DOCKERHUB_USERNAME }}/ckan-datapusher:$(date +%s)
+    - name: Build and Push the Datapusher Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./ckan-datapusher
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/ckan-datapusher:$(date +%s)
+    
+    - name: Build and Push the Solr Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./ckan-solr
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/ckan-solr:$(date +%s)
 
-    - name: Build the Solr Docker image
-      run: docker build ./ckan-solr --tag ${{ secrets.DOCKERHUB_USERNAME }}/ckan-solr:$(date +%s)
-      
-    - name: Build the CKAN Docker image
-      run: docker build ./ckan --tag ${{ secrets.DOCKERHUB_USERNAME }}/ckan:$(date +%s)
+    - name: Build and Push the CKAN Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./ckan
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/ckan:$(date +%s)
