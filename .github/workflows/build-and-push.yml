@@ -23,7 +23,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
       
     - name: Docker meta - Datapusher
-      id: meta
+      id: meta-datapusher
       uses: docker/metadata-action@v4
       with:
         images: ${{ secrets.DOCKERHUB_USERNAME }}/ckan-datapusher
@@ -38,7 +38,7 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}
 
     - name: Docker meta - Solr
-      id: meta
+      id: meta-solr
       uses: docker/metadata-action@v4
       with:
         images: ${{ secrets.DOCKERHUB_USERNAME }}/ckan-solr
@@ -53,7 +53,7 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}
 
     - name: Docker meta - CKAN
-      id: meta
+      id: meta-ckan
       uses: docker/metadata-action@v4
       with:
         images: ${{ secrets.DOCKERHUB_USERNAME }}/ckan
