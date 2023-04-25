@@ -1,0 +1,33 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Chekout the Repo
+      uses: actions/checkout@v3
+      
+    - name: Login to Docker Hub
+      uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        
+        
+    - name: Build the Datapusher Docker image
+      run: docker build . --file ./ckan-datapusher/Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/ckan-datapusher:$(date +%s
+      
+    - name: Build the Solr Docker image
+      run: docker build . --file ./ckan-solr/Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/ckan-solr:$(date +%s)
+      
+    - name: Build the CKAN Docker image
+      run: docker build . --file ./ckan/Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/ckan:$(date +%s)
