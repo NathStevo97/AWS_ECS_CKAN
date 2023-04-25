@@ -35,7 +35,7 @@ jobs:
       with:
         context: ./ckan-datapusher
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
+        tags: ${{ steps.meta-datapusher.outputs.tags }}
 
     - name: Docker meta - Solr
       id: meta-solr
@@ -50,7 +50,7 @@ jobs:
       with:
         context: ./ckan-solr
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
+        tags: ${{ steps.meta-solr.outputs.tags }}
 
     - name: Docker meta - CKAN
       id: meta-ckan
@@ -65,4 +65,4 @@ jobs:
       with:
         context: ./ckan
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
+        tags: ${{ steps.meta-ckan.outputs.tags }}
