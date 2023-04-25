@@ -23,12 +23,12 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
       
     - name: Docker meta - Datapusher
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ DOCKERHUB_USERNAME }}/ckan-datapusher
-          tags: |
-            type=raw,value={{date 'YYYYMMDD'}}
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: ${{ DOCKERHUB_USERNAME }}/ckan-datapusher
+        tags: |
+          type=raw,value={{date 'YYYYMMDD'}}
 
     - name: Build and push
       uses: docker/build-push-action@v3
