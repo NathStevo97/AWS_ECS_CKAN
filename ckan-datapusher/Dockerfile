@@ -41,8 +41,8 @@ RUN sed -i -E 's/(requests\[security\])==.*/\1==2.25.1/' requirements.txt
 RUN pip install -r requirements.txt && pip install -e .
 
 # entrypoint configuration
-COPY datapusher-entrypoint.sh /datapusher-entrypoint.sh
-COPY datapusher_settings.py $DATAPUSHER_HOME/src/datapusher/deployment/datapusher_settings.py.unconfigured
+COPY ./datapusher-entrypoint.sh /datapusher-entrypoint.sh
+COPY ./datapusher_settings.py $DATAPUSHER_HOME/src/datapusher/deployment/datapusher_settings.py.unconfigured
 RUN chmod 700 /datapusher-entrypoint.sh
 
 # configure and run the datapusher service
