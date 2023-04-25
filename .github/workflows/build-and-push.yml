@@ -37,5 +37,5 @@ jobs:
     - name: Build the CKAN Docker image
       run: docker build ./ckan --tag ${{ secrets.DOCKERHUB_USERNAME }}/ckan:$(date +%s)
 
-   - name: Push the CKAN Docker image
-     run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/ckan:$(date +%s)
+    - name: Push the CKAN Docker image
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/ckan:$(date +%s)
