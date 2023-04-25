@@ -30,9 +30,39 @@ jobs:
         tags: |
           type=raw,value={{date 'YYYYMMDD'}}
 
-    - name: Build and push
+    - name: Build and push - Datapusher
       uses: docker/build-push-action@v3
       with:
         context: ./ckan-datapusher
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+
+    - name: Docker meta - Solr
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: ${{ secrets.DOCKERHUB_USERNAME }}/ckan-solr
+        tags: |
+          type=raw,value={{date 'YYYYMMDD'}}
+
+    - name: Build and push - Solr
+      uses: docker/build-push-action@v3
+      with:
+        context: ./ckan-solr
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+
+    - name: Docker meta - CKAN
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: ${{ secrets.DOCKERHUB_USERNAME }}/ckan
+        tags: |
+          type=raw,value={{date 'YYYYMMDD'}}
+
+    - name: Build and push - CKAN
+      uses: docker/build-push-action@v3
+      with:
+        context: ./ckan
         push: true
         tags: ${{ steps.meta.outputs.tags }}
