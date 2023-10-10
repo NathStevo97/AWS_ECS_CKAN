@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker & Terraform CI
 
 on:
   push:
@@ -8,20 +8,44 @@ on:
 
 jobs:
 
-  build:
+  terraform-ci:
 
     runs-on: ubuntu-latest
 
     steps:
     - name: Chekout the Repo
       uses: actions/checkout@v3
-      
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Initialize Terraform
+      id: init
+      run: terraform init
+
+    - name: Terraform Format
+      id: fmt
+      run: terraform fmt -check
+
+    - name: Terraform Validate
+      id: validate
+      if: (success() || failure())
+      run: terraform validate
+
+  image-build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Chekout the Repo
+      uses: actions/checkout@v3
+
     - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      
+
     - name: Docker meta - Datapusher
       id: meta-datapusher
       uses: docker/metadata-action@v4
