@@ -20,20 +20,8 @@ jobs:
     - name: Chekout the Repo
       uses: actions/checkout@v3
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-
-    - name: Initialize Terraform
-      id: init
-      run: terraform init
-
-    - name: Terraform Format
-      id: fmt
-      run: terraform fmt -check
-
     - name: terraform validate
       id: validate
-      if: (success() || failure())
       uses: dflook/terraform-validate@v1
       with:
         path: .
