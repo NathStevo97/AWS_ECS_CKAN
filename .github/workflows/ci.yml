@@ -10,6 +10,10 @@ jobs:
 
   terraform-ci:
 
+    defaults:
+      run:
+        shell: bash
+
     runs-on: ubuntu-latest
 
     steps:
@@ -33,6 +37,13 @@ jobs:
       run: terraform validate
 
   image-build:
+
+    defaults:
+      run:
+        shell: bash
+
+    if: ${{ always() }}
+    needs: terraform-ci
 
     runs-on: ubuntu-latest
 
