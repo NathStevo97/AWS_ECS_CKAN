@@ -20,11 +20,14 @@ jobs:
     - name: Chekout the Repo
       uses: actions/checkout@v3
 
-    - name: terraform validate
-      id: validate
-      uses: dflook/terraform-validate@v1
+    - name: Test terraform-version
+      uses: dflook/terraform-version@v1
+      id: terraform-version
       with:
         path: .
+
+    - name: Print the version
+      run: echo "The terraform version was ${{ steps.terraform-version.outputs.terraform }}"
 
   image-build:
 
