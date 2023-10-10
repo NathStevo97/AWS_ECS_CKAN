@@ -1,6 +1,6 @@
 module "rds" {
   source  = "terraform-aws-modules/rds/aws"
-  version = "~> 4.0"
+  version = "= 6.1.1"
 
   # storage
   allocated_storage = 20
@@ -34,7 +34,7 @@ module "rds" {
   password = var.rds_database_password
   username = var.rds_database_username
   # update module has create_random_password set to true, which we do not want.
-  create_random_password = false
+  # create_random_password = false
 
   # networking
   subnet_ids             = var.private_subnet_ids_list

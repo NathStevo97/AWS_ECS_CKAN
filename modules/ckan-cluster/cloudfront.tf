@@ -603,7 +603,7 @@ resource "aws_route53_record" "ckan_cloudfront_validation_record" {
 }
 
 resource "aws_acm_certificate" "ckan_certificate" {
-  provider = aws.us_east
+  provider          = aws.us_east
   domain_name       = var.ckan_url
   validation_method = "DNS"
 
@@ -613,7 +613,7 @@ resource "aws_acm_certificate" "ckan_certificate" {
 }
 
 resource "aws_acm_certificate_validation" "certificate_validation" {
-  provider = aws.us_east
+  provider                = aws.us_east
   certificate_arn         = aws_acm_certificate.ckan_certificate.arn
   validation_record_fqdns = [for record in aws_route53_record.ckan_cloudfront_validation_record : record.fqdn]
 }

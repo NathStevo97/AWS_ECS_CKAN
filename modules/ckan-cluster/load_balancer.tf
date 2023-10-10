@@ -20,11 +20,11 @@ resource "aws_security_group" "elb" {
   ingress {
     #cidr_blocks = var.allowed_cidr_blocks
     #cidr_blocks = ["0.0.0.0/0"]
-    prefix_list_ids = [ data.aws_ec2_managed_prefix_list.cloudwatch.id ]
-    description = "https to ELB"
-    from_port   = 443
-    protocol    = "tcp"
-    to_port     = 443
+    prefix_list_ids = [data.aws_ec2_managed_prefix_list.cloudwatch.id]
+    description     = "https to ELB"
+    from_port       = 443
+    protocol        = "tcp"
+    to_port         = 443
   }
 
   egress {

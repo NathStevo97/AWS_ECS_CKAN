@@ -4,6 +4,6 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "us_east"
-  region  = "us-east-1"
+  alias  = "us_east"
+  region = "us-east-1"
 }

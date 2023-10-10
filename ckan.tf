@@ -9,7 +9,7 @@ module "vpc" {
 
   azs = formatlist("%s%s", var.region, keys(var.availability_zone_map))
 
-  private_subnets               = [for n in toset(values(var.availability_zone_map)) : cidrsubnet(var.vpc_cidr, 8, tonumber(n) + 128)]
+  private_subnets = [for n in toset(values(var.availability_zone_map)) : cidrsubnet(var.vpc_cidr, 8, tonumber(n) + 128)]
 
   private_dedicated_network_acl = true
   private_inbound_acl_rules = [
@@ -27,7 +27,7 @@ module "vpc" {
   ]
 
 
-  public_subnets               = [for n in toset(values(var.availability_zone_map)) : cidrsubnet(var.vpc_cidr, 8, tonumber(n))]
+  public_subnets = [for n in toset(values(var.availability_zone_map)) : cidrsubnet(var.vpc_cidr, 8, tonumber(n))]
 
   public_dedicated_network_acl = true
   public_inbound_acl_rules = [
@@ -46,7 +46,7 @@ module "vpc" {
     merge(local.acls.smtp, { rule_number = 104 }),
     merge(local.acls.ephemeral, { rule_number = 105 }),
   ]
-  
+
 
   enable_dns_hostnames    = true
   enable_dns_support      = true
