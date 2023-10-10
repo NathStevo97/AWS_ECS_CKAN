@@ -33,6 +33,10 @@ jobs:
       id: fmt
       run: terraform fmt -check
 
+    - name: terraform validate
+      id: validate
+      if: (success() || failure())
+      run: terraform validate
   image-build:
 
     defaults:
