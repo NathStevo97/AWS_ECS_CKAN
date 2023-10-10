@@ -20,14 +20,18 @@ jobs:
     - name: Chekout the Repo
       uses: actions/checkout@v3
 
-    - name: Test terraform-version
-      uses: dflook/terraform-version@v1
-      id: terraform-version
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
       with:
-        path: .
+        terraform_version: 1.5.7
 
-    - name: Print the version
-      run: echo "The terraform version was ${{ steps.terraform-version.outputs.terraform }}"
+    - name: Initialize Terraform
+      id: init
+      run: terraform init
+
+    - name: Terraform Format
+      id: fmt
+      run: terraform fmt -check
 
   image-build:
 
