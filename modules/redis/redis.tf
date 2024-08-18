@@ -32,7 +32,7 @@ resource "aws_route53_record" "redis" {
   name    = var.redis_url
   type    = "CNAME"
   ttl     = "300"
-  records = [aws_elasticache_cluster.redis.cache_nodes.0.address]
+  records = [aws_elasticache_cluster.redis.cache_nodes[0].address]
 }
 
 # security group

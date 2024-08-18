@@ -1,3 +1,3 @@
 output "redis-address" {
-  value = aws_elasticache_cluster.redis.cache_nodes.0.address
+  value = aws_elasticache_cluster.redis.cache_nodes[0].address
 }
