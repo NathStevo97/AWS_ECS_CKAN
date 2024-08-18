@@ -95,39 +95,19 @@ jobs:
         tags: |
           type=raw,value={{date 'YYYYMMDD'}}
 
-    - name: Build and push - Datapusher
-      uses: docker/build-push-action@v3
-      with:
-        context: ./ckan-datapusher
-        push: true
-        tags: ${{ steps.meta-datapusher.outputs.tags }}
+    - name: Docker Build - Datapusher
+      id: build-datapusher
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}ckan-datapusher:${{ steps.meta-datapusher.outputs.tags }} ./ckan-datapusher
 
-    - name: Docker meta - Solr
-      id: meta-solr
-      uses: docker/metadata-action@v4
+    - name: Trivy - Datapusher
+      uses: aquasecurity/trivy-action@0.20.0
       with:
-        images: ${{ secrets.DOCKERHUB_USERNAME }}/ckan-solr
-        tags: |
-          type=raw,value={{date 'YYYYMMDD'}}
+        image-ref: '${{ secrets.DOCKERHUB_USERNAME }}ckan-datapusher:${{ steps.meta-datapusher.outputs.tags }}'
+        format: 'sarif'
+        output: 'trivy-results-datapusher.sarif'
 
-    - name: Build and push - Solr
-      uses: docker/build-push-action@v3
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v2
       with:
-        context: ./ckan-solr
-        push: true
-        tags: ${{ steps.meta-solr.outputs.tags }}
-
-    - name: Docker meta - CKAN
-      id: meta-ckan
-      uses: docker/metadata-action@v4
-      with:
-        images: ${{ secrets.DOCKERHUB_USERNAME }}/ckan
-        tags: |
-          type=raw,value={{date 'YYYYMMDD'}}
-
-    - name: Build and push - CKAN
-      uses: docker/build-push-action@v3
-      with:
-        context: ./ckan
-        push: true
-        tags: ${{ steps.meta-ckan.outputs.tags }}
+        sarif_file: 'trivy-results.sarif'

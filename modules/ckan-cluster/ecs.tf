@@ -1,6 +1,7 @@
 #----- ECS --------
 module "ecs" {
   source       = "terraform-aws-modules/ecs/aws"
+  version      = "5.11.4"
   cluster_name = "${var.resource_name_prefix}-ecs"
 }
 

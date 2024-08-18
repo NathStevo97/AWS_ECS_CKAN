@@ -68,8 +68,6 @@ resource "aws_ecs_service" "ckan" {
     aws_alb_listener.solr-http,
     module.ecs
   ]
-
-
 }
 
 resource "aws_ecs_task_definition" "ckan" {
@@ -164,7 +162,7 @@ resource "aws_ecs_task_definition" "ckan" {
         "sourceVolume": "efs-ckan-storage"
       }
     ],
-    "image": "nathstevo97/nstephenson-ckan-test:v2.0.16",
+    "image": "nathstevo97/ckan:20231122",
     "name": "ckan"
     }
   ]

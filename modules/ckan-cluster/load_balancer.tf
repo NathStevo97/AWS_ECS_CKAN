@@ -106,7 +106,7 @@ resource "aws_alb_listener" "ckan-http" {
   load_balancer_arn = aws_alb.application-load-balancer.id
   port              = "80"
   protocol          = "HTTP"
-
+  /*
   default_action {
     type = "redirect"
     redirect {
@@ -114,6 +114,11 @@ resource "aws_alb_listener" "ckan-http" {
       protocol    = "HTTPS"
       status_code = "HTTP_301"
     }
+  }
+  */
+  default_action {
+    target_group_arn = aws_alb_target_group.ckan-http.id
+    type             = "forward"
   }
 
   depends_on = [
@@ -133,7 +138,7 @@ resource "aws_alb_target_group" "ckan-http" {
     path = "/api/3/action/status_show"
   }
 }
-
+/*
 resource "aws_alb_listener" "ckan-https" {
   load_balancer_arn = aws_alb.application-load-balancer.id
   port              = "443"
@@ -149,3 +154,4 @@ resource "aws_alb_listener" "ckan-https" {
 
   depends_on = [aws_alb_target_group.ckan-http]
 }
+*/
