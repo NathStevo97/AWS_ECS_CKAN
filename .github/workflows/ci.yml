@@ -98,7 +98,7 @@ jobs:
     - name: Docker Build - Datapusher
       id: build-datapusher
       run: |
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}ckan-datapusher:${{ steps.meta-datapusher.outputs.tags }} ./ckan-datapusher
+        docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}ckan-datapusher:${{ steps.meta-datapusher.outputs.tags }} ./ckan-datapusher
 
     - name: Trivy - Datapusher
       uses: aquasecurity/trivy-action@0.20.0
