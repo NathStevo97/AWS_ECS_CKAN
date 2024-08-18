@@ -33,14 +33,14 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 0
-    max_ttl            = 0
-    min_ttl            = 0
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 0
+    max_ttl                = 0
+    min_ttl                = 0
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -73,15 +73,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 604800
-    max_ttl            = 604800
-    min_ttl            = 604800
-    path_pattern       = "/dataset/*/resource/*/download/*"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 604800
+    max_ttl                = 604800
+    min_ttl                = 604800
+    path_pattern           = "/dataset/*/resource/*/download/*"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -110,15 +110,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 604800
-    max_ttl            = 604800
-    min_ttl            = 604800
-    path_pattern       = "/dataset/*/resource/*/view/*"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 604800
+    max_ttl                = 604800
+    min_ttl                = 604800
+    path_pattern           = "/dataset/*/resource/*/view/*"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -146,15 +146,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 604800
-    max_ttl            = 604800
-    min_ttl            = 604800
-    path_pattern       = "/*/dataset/*/resource/*/view/*"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 604800
+    max_ttl                = 604800
+    min_ttl                = 604800
+    path_pattern           = "/*/dataset/*/resource/*/view/*"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -182,15 +182,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 604800
-    max_ttl            = 604800
-    min_ttl            = 604800
-    path_pattern       = "/webassets/*"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 604800
+    max_ttl                = 604800
+    min_ttl                = 604800
+    path_pattern           = "/webassets/*"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -216,15 +216,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 604800
-    max_ttl            = 604800
-    min_ttl            = 604800
-    path_pattern       = "/uploads/admin/*.png"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 604800
+    max_ttl                = 604800
+    min_ttl                = 604800
+    path_pattern           = "/uploads/admin/*.png"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -250,15 +250,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 604800
-    max_ttl            = 604800
-    min_ttl            = 604800
-    path_pattern       = "/base/*"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 604800
+    max_ttl                = 604800
+    min_ttl                = 604800
+    path_pattern           = "/base/*"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -284,15 +284,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 604800
-    max_ttl            = 604800
-    min_ttl            = 604800
-    path_pattern       = "/api/i18n/*"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 604800
+    max_ttl                = 604800
+    min_ttl                = 604800
+    path_pattern           = "/api/i18n/*"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -335,7 +335,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id         = "ckan"
     trusted_key_groups       = []
     trusted_signers          = []
-    #viewer_protocol_policy   = "redirect-to-https"
+    viewer_protocol_policy   = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
   }
 
@@ -348,15 +348,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 604800
-    max_ttl            = 604800
-    min_ttl            = 604800
-    path_pattern       = "/"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 604800
+    max_ttl                = 604800
+    min_ttl                = 604800
+    path_pattern           = "/"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -384,15 +384,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 604800
-    max_ttl            = 604800
-    min_ttl            = 604800
-    path_pattern       = "/about"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 604800
+    max_ttl                = 604800
+    min_ttl                = 604800
+    path_pattern           = "/about"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -420,15 +420,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 3600
-    max_ttl            = 3600
-    min_ttl            = 3600
-    path_pattern       = "/dataset/"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 3600
+    max_ttl                = 3600
+    min_ttl                = 3600
+    path_pattern           = "/dataset/"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -456,15 +456,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 3600
-    max_ttl            = 3600
-    min_ttl            = 3600
-    path_pattern       = "/dataset"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 3600
+    max_ttl                = 3600
+    min_ttl                = 3600
+    path_pattern           = "/dataset"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -492,15 +492,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 3600
-    max_ttl            = 3600
-    min_ttl            = 3600
-    path_pattern       = "/*/dataset/"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 3600
+    max_ttl                = 3600
+    min_ttl                = 3600
+    path_pattern           = "/*/dataset/"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
@@ -528,15 +528,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "GET",
       "HEAD",
     ]
-    compress           = false
-    default_ttl        = 3600
-    max_ttl            = 3600
-    min_ttl            = 3600
-    path_pattern       = "/*/dataset"
-    smooth_streaming   = false
-    target_origin_id   = "ckan"
-    trusted_key_groups = []
-    trusted_signers    = []
+    compress               = false
+    default_ttl            = 3600
+    max_ttl                = 3600
+    min_ttl                = 3600
+    path_pattern           = "/*/dataset"
+    smooth_streaming       = false
+    target_origin_id       = "ckan"
+    trusted_key_groups     = []
+    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
     #viewer_protocol_policy = "allow-all"
 
