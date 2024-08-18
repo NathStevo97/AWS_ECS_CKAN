@@ -92,12 +92,15 @@ jobs:
       run: |
         docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan-datapusher:${{ github.sha }} ./ckan-datapusher
 
-    - name: Trivy - Datapusher
+    - name: Run Trivy - Datapusher
       uses: aquasecurity/trivy-action@0.20.0
       with:
-        image-ref: '${{ secrets.DOCKERHUB_USERNAME }}ckan-datapusher:${{ github.sha }}'
-        format: 'sarif'
-        output: 'trivy-results-datapusher.sarif'
+        image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan-datapusher:${{ github.sha }}'
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
 
     - name: Docker Push - Datapusher
       id: push-datapusher

@@ -1,6 +1,6 @@
-FROM --platform=linux/amd64 ubuntu:20.04
+FROM --platform=linux/amd64 ubuntu:24.04
 
-ENV DATAPUSHER_HOME /usr/lib/ckan/datapusher
+ENV DATAPUSHER_HOME=/usr/lib/ckan/datapusher
 
 # install dependencies
 ENV TZ=Etc/UTC
@@ -31,14 +31,13 @@ WORKDIR $DATAPUSHER_HOME/src
 
 # clone the datapusher repository
 # this was 0.0.17, which, is no longer loading certain python modules.
-RUN git clone -b '0.0.18' https://github.com/ckan/datapusher.git
+RUN git clone -b '0.0.20' https://github.com/ckan/datapusher.git
 
 # install datapusher and it's dependencies
 WORKDIR $DATAPUSHER_HOME/src/datapusher
-
-# bump requests package to latest version to work around an issue
-RUN sed -i -E 's/(requests\[security\])==.*/\1==2.25.1/' requirements.txt
-RUN pip install -r requirements.txt && pip install -e .
+COPY ./requirements.txt ./requirements.txt
+RUN pip3 install -r requirements.txt --break-system-packages && pip install -e . --break-system-packages
+RUN pip3 install werkzeug==3.0.3 --break-system-packages
 
 # entrypoint configuration
 COPY ./datapusher-entrypoint.sh /datapusher-entrypoint.sh
