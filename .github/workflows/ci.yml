@@ -87,23 +87,15 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-    - name: Docker meta - Datapusher
-      id: meta-datapusher
-      uses: docker/metadata-action@v4
-      with:
-        images: ${{ secrets.DOCKERHUB_USERNAME }}/ckan-datapusher
-        tags: |
-          type=raw,value={{date 'YYYYMMDD'}}
-
     - name: Docker Build - Datapusher
       id: build-datapusher
       run: |
-        docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}ckan-datapusher:${{ steps.meta-datapusher.outputs.tags }} ./ckan-datapusher
+        docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}ckan-datapusher:${{ github.sha }} ./ckan-datapusher
 
     - name: Trivy - Datapusher
       uses: aquasecurity/trivy-action@0.20.0
       with:
-        image-ref: '${{ secrets.DOCKERHUB_USERNAME }}ckan-datapusher:${{ steps.meta-datapusher.outputs.tags }}'
+        image-ref: '${{ secrets.DOCKERHUB_USERNAME }}ckan-datapusher:${{ github.sha }}'
         format: 'sarif'
         output: 'trivy-results-datapusher.sarif'
 
