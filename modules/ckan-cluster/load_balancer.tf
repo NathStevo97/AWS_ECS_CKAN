@@ -138,7 +138,7 @@ resource "aws_alb_target_group" "ckan-http" {
     path = "/api/3/action/status_show"
   }
 }
-/*
+
 resource "aws_alb_listener" "ckan-https" {
   load_balancer_arn = aws_alb.application-load-balancer.id
   port              = "443"
@@ -154,4 +154,3 @@ resource "aws_alb_listener" "ckan-https" {
 
   depends_on = [aws_alb_target_group.ckan-http]
 }
-*/

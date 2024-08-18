@@ -41,8 +41,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -82,8 +82,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -119,8 +119,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -155,8 +155,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -191,8 +191,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -225,8 +225,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -259,8 +259,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -293,8 +293,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -336,7 +336,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     trusted_key_groups       = []
     trusted_signers          = []
     #viewer_protocol_policy   = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    #viewer_protocol_policy = "allow-all"
   }
 
   ordered_cache_behavior {
@@ -357,8 +357,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -393,8 +393,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -429,8 +429,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -465,8 +465,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -501,8 +501,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
@@ -537,8 +537,8 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id   = "ckan"
     trusted_key_groups = []
     trusted_signers    = []
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "allow-all"
 
     forwarded_values {
       headers = [
