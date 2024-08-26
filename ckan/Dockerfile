@@ -48,8 +48,11 @@ RUN mkdir -p $CKAN_VENV $CKAN_CONFIG $CKAN_STORAGE_PATH \
 # pull the ckan source code
 RUN git clone --progress https://github.com/ckan/ckan.git $CKAN_SRC \
     && cd $CKAN_SRC \
-    && git checkout tags/ckan-2.9.7 \
+    && git checkout tags/ckan-2.10.4 \
     && rm -rf .git .github
+
+
+
 
 # install ckan
 RUN ckan-pip install -U pip \
