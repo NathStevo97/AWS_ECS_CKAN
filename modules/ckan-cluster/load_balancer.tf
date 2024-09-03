@@ -3,9 +3,9 @@ data "aws_ec2_managed_prefix_list" "cloudwatch" {
 }
 
 resource "aws_security_group" "elb" {
-  name = "${var.resource_name_prefix}-elb-sg"
-
-  vpc_id = var.vpc_id
+  name        = "${var.resource_name_prefix}-elb-sg"
+  description = "Allow Ingress to CKAN-Cluster Loadbalancer"
+  vpc_id      = var.vpc_id
 
   ingress {
     #cidr_blocks = var.allowed_cidr_blocks
@@ -28,6 +28,7 @@ resource "aws_security_group" "elb" {
   }
 
   egress {
+    description      = "allow all egress from ckan load-balancer"
     from_port        = 0
     to_port          = 0
     protocol         = "-1"

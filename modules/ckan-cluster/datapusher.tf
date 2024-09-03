@@ -1,8 +1,10 @@
 resource "aws_security_group" "datapusher" {
-  name   = "${var.resource_name_prefix}-datapusher"
-  vpc_id = var.vpc_id
+  name        = "${var.resource_name_prefix}-datapusher"
+  vpc_id      = var.vpc_id
+  description = "Allow Ingress to CKAN-Datapusher Container"
 
   egress {
+    description      = "allow all egress from ckan-datapusher container"
     from_port        = 0
     to_port          = 0
     protocol         = "-1"

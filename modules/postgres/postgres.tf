@@ -67,10 +67,12 @@ resource "aws_route53_record" "postgres" {
 
 # security group
 resource "aws_security_group" "rds" {
-  name   = "${var.resource_name_prefix}-db-sg"
-  vpc_id = var.vpc_id
+  name        = "${var.resource_name_prefix}-db-sg"
+  vpc_id      = var.vpc_id
+  description = "Allow all Postgres Egress, and Ingress within allowed CIDR range"
 
   egress {
+    description      = "allow all egress from RDS"
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
@@ -83,6 +85,7 @@ resource "aws_security_group" "rds" {
 
 # rules
 resource "aws_security_group_rule" "postgres-cidr" {
+  description       = "allow ingress from ckan cluster cidrs"
   type              = "ingress"
   from_port         = 5432
   to_port           = 5432

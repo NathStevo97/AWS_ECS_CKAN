@@ -36,10 +36,12 @@ resource "aws_efs_mount_target" "efs-c" {
 }
 
 resource "aws_security_group" "efs" {
-  name   = "${var.name}-efs"
-  vpc_id = var.vpc_id
+  name        = "${var.name}-efs"
+  vpc_id      = var.vpc_id
+  description = "Allow Ingress within allowed CIDRs to EFS, and all Egress"
 
   egress {
+    description      = "allow all egress from EFS"
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
@@ -49,6 +51,7 @@ resource "aws_security_group" "efs" {
 }
 
 resource "aws_security_group_rule" "cidr-efs" {
+  description       = "allow ingress within allowed cidrs"
   type              = "ingress"
   from_port         = 2049
   to_port           = 2049
@@ -58,6 +61,7 @@ resource "aws_security_group_rule" "cidr-efs" {
 }
 
 resource "aws_security_group_rule" "group" {
+  description              = "allow ingress within allowed security groups"
   type                     = "ingress"
   from_port                = 2049
   to_port                  = 2049

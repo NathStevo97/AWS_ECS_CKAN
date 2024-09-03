@@ -1,8 +1,10 @@
 resource "aws_security_group" "ckan" {
-  name   = "${var.resource_name_prefix}-ckan"
-  vpc_id = var.vpc_id
+  name        = "${var.resource_name_prefix}-ckan"
+  description = "Allow ingress to CKAN container"
+  vpc_id      = var.vpc_id
 
   egress {
+    description      = "allow all egress from ckan container"
     from_port        = 0
     to_port          = 0
     protocol         = "-1"

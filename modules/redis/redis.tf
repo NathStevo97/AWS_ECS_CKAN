@@ -37,10 +37,12 @@ resource "aws_route53_record" "redis" {
 
 # security group
 resource "aws_security_group" "redis" {
-  name   = "${var.resource_name_prefix}-redis"
-  vpc_id = var.vpc_id
+  name        = "${var.resource_name_prefix}-redis"
+  vpc_id      = var.vpc_id
+  description = "Allow all Redis Egress, and Ingress within allowed CIDR range"
 
   egress {
+    description      = "allow all egress from elasticache"
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
@@ -51,6 +53,7 @@ resource "aws_security_group" "redis" {
 
 # rules
 resource "aws_security_group_rule" "redis-cidr" {
+  description       = "allow ingress from ckan cluster cidrs"
   type              = "ingress"
   from_port         = 6379
   to_port           = 6379

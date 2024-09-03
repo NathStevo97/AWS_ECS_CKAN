@@ -1,8 +1,10 @@
 resource "aws_security_group" "solr" {
-  name   = "${var.resource_name_prefix}-solr"
-  vpc_id = var.vpc_id
+  name        = "${var.resource_name_prefix}-solr"
+  vpc_id      = var.vpc_id
+  description = "Allow Ingress to Solr Container"
 
   egress {
+    description      = "allow all egress from solr container"
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
