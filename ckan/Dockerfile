@@ -1,5 +1,7 @@
 FROM --platform=linux/amd64 debian:buster
 
+COPY ./requirements.txt ./requirements.txt
+
 # install dependencies
 RUN apt-get -q -y update \
     && DEBIAN_FRONTEND=noninteractive apt-get -q -y upgrade \
@@ -50,7 +52,7 @@ RUN git clone --progress https://github.com/ckan/ckan.git $CKAN_SRC \
     && cd $CKAN_SRC \
     && git checkout tags/ckan-2.10.4 \
     && rm -rf .git .github
-    
+
 # install ckan
 RUN ckan-pip install -U pip \
     && ckan-pip install --upgrade --no-cache-dir -r $CKAN_SRC/requirement-setuptools.txt \

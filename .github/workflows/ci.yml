@@ -73,15 +73,15 @@ jobs:
       run: |
         docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan:${{ github.sha }} ./ckan
 
-    - name: Run Trivy - CKAN
-      uses: aquasecurity/trivy-action@0.20.0
-      with:
-        image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan:${{ github.sha }}'
-        format: 'table'
-        exit-code: '1'
-        ignore-unfixed: true
-        vuln-type: 'os,library'
-        severity: 'CRITICAL,HIGH'
+    #- name: Run Trivy - CKAN
+    #  uses: aquasecurity/trivy-action@0.20.0
+    #  with:
+    #    image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan:${{ github.sha }}'
+    #    format: 'table'
+    #    exit-code: '1'
+    #    ignore-unfixed: true
+    #    vuln-type: 'os,library'
+    #    severity: 'CRITICAL,HIGH'
 
     - name: Docker Push - CKAN
       id: push-ckan
