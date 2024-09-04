@@ -642,9 +642,6 @@ resource "aws_s3_bucket" "cloudfront_logs" {
       grant, # Managed by CloudFront; ignore the changes
     ]
   }
-  versioning_configuration {
-    status = "Enabled"
-  }
 }
 
 resource "aws_s3_bucket_ownership_controls" "cloudfront_logs_controls" {
