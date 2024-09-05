@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 debian:buster
+FROM --platform=linux/amd64 debian:bookworm
 
 COPY ./requirements.txt ./requirements.txt
 
