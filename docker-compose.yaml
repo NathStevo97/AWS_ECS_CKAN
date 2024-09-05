@@ -26,7 +26,7 @@ services:
   postgres:
     platform: linux/amd64
     container_name: postgres
-    image: postgres:11.22-alpine
+    image: postgres:16.4-alpine
     environment:
     - POSTGRES_PASSWORD=fearless
     - POSTGRES_USER=ckan_default
