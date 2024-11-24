@@ -10,7 +10,7 @@ terraform {
 
 module "rds" {
   source  = "terraform-aws-modules/rds/aws"
-  version = "6.9.0"
+  version = "6.10.0"
 
   # storage
   allocated_storage = 20
