@@ -3,14 +3,14 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">=5.63.0"
+      version = ">= 5.63.0"
     }
   }
 }
 
 module "rds" {
   source  = "terraform-aws-modules/rds/aws"
-  version = "= 6.8.0"
+  version = "6.9.0"
 
   # storage
   allocated_storage = 20
