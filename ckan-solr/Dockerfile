@@ -1,4 +1,4 @@
-FROM solr:9.6.1-slim
+FROM solr:9.8.0-slim
 
 EXPOSE 8983
 
