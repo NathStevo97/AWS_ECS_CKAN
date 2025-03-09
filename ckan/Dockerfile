@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 debian:buster
+FROM python:3.9-slim-bookworm@sha256:d1fd807555208707ec95b284afd10048d0737e84b5f2d6fdcbed2922b9284b56
 
 COPY ./requirements.txt ./requirements.txt
 
@@ -6,10 +6,9 @@ COPY ./requirements.txt ./requirements.txt
 RUN apt-get -q -y update \
     && DEBIAN_FRONTEND=noninteractive apt-get -q -y upgrade \
     && apt-get -q -y install \
-        python3-dev \
-        python3-pip \
         python3-wheel \
         libpq-dev \
+        libmagic-dev \
         libxml2-dev \
         libxslt-dev \
         libgeos-dev \
@@ -21,20 +20,18 @@ RUN apt-get -q -y update \
         vim \
         wget \
         gettext-base \
-        netcat \
+        netcat-traditional \
     && apt-get -y autoremove \
     && apt-get -q clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1 && python --version
-RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1 && pip --version
 RUN pip install --upgrade awscli
 RUN pip install --upgrade virtualenv
 
 # ckan install environment
-ENV CKAN_HOME /usr/lib/ckan
-ENV CKAN_VENV $CKAN_HOME/venv
-ENV CKAN_CONFIG /etc/ckan
+ENV CKAN_HOME=/usr/lib/ckan
+ENV CKAN_VENV=$CKAN_HOME/venv
+ENV CKAN_CONFIG=/etc/ckan
 ENV CKAN_STORAGE_PATH=/var/lib/ckan
 ENV CKAN_SRC=$CKAN_VENV/src
 
@@ -50,12 +47,11 @@ RUN mkdir -p $CKAN_VENV $CKAN_CONFIG $CKAN_STORAGE_PATH \
 # pull the ckan source code
 RUN git clone --progress https://github.com/ckan/ckan.git $CKAN_SRC \
     && cd $CKAN_SRC \
-    && git checkout tags/ckan-2.10.4 \
+    && git checkout tags/ckan-2.11.2 \
     && rm -rf .git .github
 
 # install ckan
 RUN ckan-pip install -U pip \
-    && ckan-pip install --upgrade --no-cache-dir -r $CKAN_SRC/requirement-setuptools.txt \
     && ckan-pip install --upgrade --no-cache-dir -r $CKAN_SRC/requirements.txt \
     && ckan-pip install -e $CKAN_SRC/ \
     && ln -s $CKAN_SRC/ckan/config/who.ini $CKAN_CONFIG/who.ini \

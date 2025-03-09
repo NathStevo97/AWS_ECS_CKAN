@@ -35,7 +35,7 @@ services:
     ports:
     - 0.0.0.0:5432:5432
     volumes:
-    - postgres:/var/lib/postgresql/data/
+    - postgres:/var/lib/postgresql@16/data:rw
     extra_hosts:
     - "host.docker.internal:host-gateway"
     healthcheck:
@@ -115,6 +115,7 @@ services:
     - DATASTORE_ROLENAME=datastore_ro
     - DATASTORE_PASSWORD=datastore
     - SESSION_SECRET=AAAAAAAAAAAAAAAAAAAAAAAAA
+    - CKAN_DATAPUSHER_API_TOKEN=AAAAAAAA-0000-1111-2222-BBBBBBBBBBBB
     extra_hosts:
     - "host.docker.internal:host-gateway"
     volumes:

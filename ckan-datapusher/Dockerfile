@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ubuntu:24.04
+FROM python:3.9-slim-bookworm@sha256:d1fd807555208707ec95b284afd10048d0737e84b5f2d6fdcbed2922b9284b56
 
 ENV DATAPUSHER_HOME=/usr/lib/ckan/datapusher
 
@@ -7,8 +7,6 @@ ENV TZ=Etc/UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update \
     && apt-get -y install \
-        python3-dev \
-        python3-pip \
         build-essential \
         libxslt1-dev \
         libxml2-dev \
@@ -20,12 +18,6 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1 && python --version
-RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1 && pip --version
-
-# create home directory of datapusher
-RUN mkdir -p $DATAPUSHER_HOME/src
-
 # set working directory
 WORKDIR $DATAPUSHER_HOME/src
 
@@ -33,11 +25,12 @@ WORKDIR $DATAPUSHER_HOME/src
 # this was 0.0.17, which, is no longer loading certain python modules.
 RUN git clone -b '0.0.20' https://github.com/ckan/datapusher.git
 
-# install datapusher and it's dependencies
 WORKDIR $DATAPUSHER_HOME/src/datapusher
+
+# install datapusher and its dependencies
 COPY ./requirements.txt ./requirements.txt
-RUN pip3 install -r requirements.txt --break-system-packages && pip install -e . --break-system-packages
-RUN pip3 install werkzeug==3.0.3 --break-system-packages
+RUN pip install -r requirements.txt --break-system-packages
+RUN pip install -e . --break-system-packages
 
 # entrypoint configuration
 COPY ./datapusher-entrypoint.sh /datapusher-entrypoint.sh

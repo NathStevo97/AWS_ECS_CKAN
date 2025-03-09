@@ -1,5 +1,25 @@
 .PHONY: help
 
+help:
+	@echo "Usage: make [target]"
+	@echo ""
+	@echo "Targets:"
+	@echo "  tf-init        Initialize Terraform"
+	@echo "  tf-plan        Plan Terraform"
+	@echo "  tf-apply       Apply Terraform"
+	@echo "  tf-destroy     Destroy Terraform"
+	@echo "  tf-nuke        Destroy and Apply Terraform"
+	@echo "  tf-test-run    Apply and Destroy Terraform"
+
+ckan-solr-docker:
+	@docker build -t docker.io/nathstevo97/ckan-solr .\ckan-solr
+
+ckan-datapusher-docker:
+	@docker build -t docker.io/nathstevo97/ckan-datapusher ./ckan-datapusher
+
+ckan-docker:
+	@docker build -t docker.io/nathstevo97/ckan ./ckan
+
 tf-init:
 	@terraform init
 
