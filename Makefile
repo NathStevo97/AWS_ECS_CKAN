@@ -20,6 +20,15 @@ ckan-datapusher-docker:
 ckan-docker:
 	@docker build -t docker.io/nathstevo97/ckan ./ckan
 
+ckan-build:
+	@docker-compose -f docker-compose.yaml build
+
+ckan-up: ckan-build
+	@docker-compose -f docker-compose.yaml up -d
+
+ckan-down:
+	@docker-compose -f docker-compose.yaml down
+
 tf-init:
 	@terraform init
 

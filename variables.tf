@@ -16,10 +16,12 @@ variable "availability_zone_map" {
 
 variable "domain_name" {
   type = string
+  default = ""
 }
 
 variable "hosted_zone_id" {
   type = string
+  default = ""
 }
 
 variable "rds_database_name" {
