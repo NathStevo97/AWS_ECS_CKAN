@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bookworm@sha256:246e088f8d9bae1efc1d3f0ab4a800616403520b3aecd810f30e27dc9d69e0b4
+FROM python:3.9-slim-bookworm@sha256:e52ca5f579cc58fed41efcbb55a0ed5dccf6c7a156cba76acfb4ab42fc19dd00
 
 ENV DATAPUSHER_HOME=/usr/lib/ckan/datapusher
 
