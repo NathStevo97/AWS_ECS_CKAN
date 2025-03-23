@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bookworm@sha256:d1fd807555208707ec95b284afd10048d0737e84b5f2d6fdcbed2922b9284b56
+FROM python:3.9-slim-bookworm@sha256:246e088f8d9bae1efc1d3f0ab4a800616403520b3aecd810f30e27dc9d69e0b4
 
 ENV DATAPUSHER_HOME=/usr/lib/ckan/datapusher
 
@@ -26,6 +26,8 @@ WORKDIR $DATAPUSHER_HOME/src
 RUN git clone -b '0.0.20' https://github.com/ckan/datapusher.git
 
 WORKDIR $DATAPUSHER_HOME/src/datapusher
+
+RUN python -m pip install --upgrade pip
 
 # install datapusher and its dependencies
 COPY ./requirements.txt ./requirements.txt
