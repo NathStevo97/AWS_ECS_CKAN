@@ -122,7 +122,7 @@ simplejson==3.19.3
     # via -r requirements.in
 six==1.16.0
     # via python-dateutil
-sqlalchemy==2.0.37
+sqlalchemy==2.0.40
     # via
     #   -r requirements.in
     #   alembic
