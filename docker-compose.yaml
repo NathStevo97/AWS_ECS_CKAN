@@ -11,7 +11,7 @@ services:
   redis:
     platform: linux/amd64
     container_name: redis
-    image: redis:latest
+    image: redis:7.4.2-bookworm@sha256:f452836040018082f5383b5969c66ed3009bfd38932ae188a28d206870ae277b
     expose:
     - 6379
     ports:
@@ -24,7 +24,7 @@ services:
   postgres:
     platform: linux/amd64
     container_name: postgres
-    image: postgres:16.4-alpine
+    image: postgres:16.4-alpine@sha256:f5aa7cac1dc299a77761ada5a5cf9c6ef4064bc85c89fed49c587dd2381d6f05
     environment:
     - POSTGRES_PASSWORD=fearless
     - POSTGRES_USER=ckan_default
