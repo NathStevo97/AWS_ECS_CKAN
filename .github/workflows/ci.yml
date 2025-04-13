@@ -34,7 +34,7 @@ jobs:
         docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan-datapusher:${{ github.sha }} ./ckan-datapusher
 
     - name: Run Trivy - Datapusher
-      uses: aquasecurity/trivy-action@0.29.0
+      uses: aquasecurity/trivy-action@0.30.0
       with:
         image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan-datapusher:${{ github.sha }}'
         format: 'table'
@@ -55,7 +55,7 @@ jobs:
         docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan-solr:${{ github.sha }} ./ckan-solr
 
     - name: Run Trivy - Solr
-      uses: aquasecurity/trivy-action@0.29.0
+      uses: aquasecurity/trivy-action@0.30.0
       with:
         image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan-solr:${{ github.sha }}'
         format: 'table'
@@ -76,7 +76,7 @@ jobs:
         docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan:${{ github.sha }} ./ckan
 
     - name: Run Trivy - CKAN
-      uses: aquasecurity/trivy-action@0.20.0
+      uses: aquasecurity/trivy-action@0.30.0
       with:
         image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan:${{ github.sha }}'
         format: 'table'
