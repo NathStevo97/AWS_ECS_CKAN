@@ -94,7 +94,7 @@ psycopg2==2.9.10
     # via -r requirements.in
 pyjwt==2.10.1
     # via -r requirements.in
-pyparsing==3.2.1
+pyparsing==3.2.3
     # via -r requirements.in
 pysolr==3.10.0
     # via -r requirements.in
