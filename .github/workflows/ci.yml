@@ -7,6 +7,93 @@ on:
     branches: [ "main" ]
 
 jobs:
+  code-quality:
+
+    defaults:
+      run:
+        shell: bash
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Chekout the Repo
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.9.8
+
+    - name: Initialize Terraform
+      id: init
+      run: terraform init
+
+    - name: Terraform Format
+      id: fmt
+      run: terraform fmt -check
+
+    - name: terraform validate
+      id: validate
+      if: (success() || failure())
+      run: terraform validate
+
+    # TFLint - Terraform Check
+    - uses: actions/cache@v4
+      name: Cache plugin dir
+      with:
+        path: ~/.tflint.d/plugins
+        key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+
+    - uses: terraform-linters/setup-tflint@v4
+      name: Setup TFLint
+      with:
+        github_token: ${{ secrets.CI_GITHUB_TOKEN }}
+
+# Print TFLint version
+    - name: Show version
+      run: tflint --version
+
+# Install plugins
+    - name: Init TFLint
+      run: tflint --init
+
+# Run tflint command in each directory recursively # use --force if you want to continue with workflow although errors are there
+    - name: Run TFLint
+      run: tflint -f compact --recursive
+
+# Checkov - Prevent cloud misconfigurations and find vulnerabilities during build-time in infrastructure as code
+#    - name: Run Checkov
+#      run: |
+#          docker run -t -v ${{ github.workspace }}:/tf --workdir /tf bridgecrew/checkov --directory /tf --skip-check CKV2_GHA_1 --quiet
+
+  security-scan:
+
+      needs: code-quality
+
+      defaults:
+        run:
+          shell: bash
+
+      runs-on: ubuntu-latest
+
+      steps:
+      - name: Chekout the Repo
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner in repo mode
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
   image-build:
 
     defaults:
@@ -14,7 +101,7 @@ jobs:
         shell: bash
 
     if: ${{ always() }}
-    needs: terraform-ci
+    needs: security-scan
 
     runs-on: ubuntu-latest
 
@@ -91,61 +178,3 @@ jobs:
       run: |
         docker image push docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan:${{ github.sha }}
 
-  terraform-ci:
-
-    defaults:
-      run:
-        shell: bash
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Chekout the Repo
-      uses: actions/checkout@v4
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: 1.9.8
-
-    - name: Initialize Terraform
-      id: init
-      run: terraform init
-
-    - name: Terraform Format
-      id: fmt
-      run: terraform fmt -check
-
-    - name: terraform validate
-      id: validate
-      if: (success() || failure())
-      run: terraform validate
-
-    # TFLint - Terraform Check
-    - uses: actions/cache@v4
-      name: Cache plugin dir
-      with:
-        path: ~/.tflint.d/plugins
-        key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
-
-    - uses: terraform-linters/setup-tflint@v4
-      name: Setup TFLint
-      with:
-        github_token: ${{ secrets.CI_GITHUB_TOKEN }}
-
-# Print TFLint version
-    - name: Show version
-      run: tflint --version
-
-# Install plugins
-    - name: Init TFLint
-      run: tflint --init
-
-# Run tflint command in each directory recursively # use --force if you want to continue with workflow although errors are there
-    - name: Run TFLint
-      run: tflint -f compact --recursive
-
-# Checkov - Prevent cloud misconfigurations and find vulnerabilities during build-time in infrastructure as code
-#    - name: Run Checkov
-#      run: |
-#          docker run -t -v ${{ github.workspace }}:/tf --workdir /tf bridgecrew/checkov --directory /tf --skip-check CKV2_GHA_1 --quiet
