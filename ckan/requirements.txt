@@ -112,7 +112,7 @@ pyyaml==6.0.2
     # via -r requirements.in
 redis==5.2.1
     # via rq
-requests==2.32.2
+requests>=2.32.0
     # via
     #   -r requirements.in
     #   pysolr
