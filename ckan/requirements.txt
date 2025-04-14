@@ -120,7 +120,7 @@ rq==2.0.0
     # via -r requirements.in
 simplejson==3.19.3
     # via -r requirements.in
-six==1.16.0
+six==1.17.0
     # via python-dateutil
 sqlalchemy==2.0.40
     # via
