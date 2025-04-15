@@ -72,26 +72,28 @@ resource "aws_ecs_task_definition" "datapusher" {
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
   task_role_arn            = aws_iam_role.ecsTaskExecutionRole.arn
-  container_definitions    = jsonencode([
-    name = "datapusher"
-    image = "nathstevo97/ckan-datapusher:latest"
-    cpu = 1024
-    memory = 2048
-    memoryReservation = 128
-    essential = true
-    portMappings = [
-      {
-        containerPort = 8800
-        hostPort = 8800
-        protocol = "tcp"
-      }
-    ]
-    logConfiguration = {
-      logDriver = "awslogs"
-      options = {
-        awslogs-group         = aws_cloudwatch_log_group.datapusher.name
-        awslogs-region        = var.aws_region
-        awslogs-stream-prefix = "ecs"
+  container_definitions = jsonencode([
+    {
+      name              = "datapusher"
+      image             = "nathstevo97/ckan-datapusher:latest"
+      cpu               = 1024
+      memory            = 2048
+      memoryReservation = 128
+      essential         = true
+      portMappings = [
+        {
+          containerPort = 8800
+          hostPort      = 8800
+          protocol      = "tcp"
+        }
+      ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = aws_cloudwatch_log_group.datapusher.name
+          awslogs-region        = var.aws_region
+          awslogs-stream-prefix = "ecs"
+        }
       }
     }
   ])

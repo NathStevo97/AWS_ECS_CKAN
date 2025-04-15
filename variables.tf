@@ -1,15 +1,15 @@
 variable "resource_name_prefix" {
-  type = string
+  type    = string
   default = "ckan"
 }
 
 variable "vpc_cidr" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "region" {
-  type = string
+  type    = string
   default = "eu-west-2"
 }
 
@@ -33,17 +33,17 @@ variable "hosted_zone_id" {
 }
 
 variable "rds_database_name" {
-  type = string
+  type    = string
   default = "ckan"
 }
 
 variable "rds_database_username" {
-  type = string
+  type    = string
   default = "ckan"
 }
 
 variable "rds_database_password" {
-  type = string
+  type    = string
   default = "ckan"
 }
 
@@ -56,22 +56,22 @@ variable "instance_class" {
 
 
 variable "admin_cidr_blocks" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "rds_readonly_database_name" {
-  type = string
+  type    = string
   default = "ckan_readonly"
 }
 
 variable "rds_readonly_database_user" {
-  type = string
+  type    = string
   default = "readonly"
 }
 
 variable "rds_readonly_database_password" {
-  type = string
+  type    = string
   default = "readonly"
 }
 /*
@@ -86,6 +86,6 @@ variable "ckan_admin_password" {
 
 
 variable "lb_acm_certificate_arn" {
-  type = string
+  type    = string
   default = ""
 }
