@@ -10,7 +10,7 @@ variable "hosted_zone_id" {
   type        = string
   description = "Route53 Hosted Zone ID for CKAN Domains."
 }
-variable "redis_url" {
+variable "domain_name" {
   type        = string
   description = "Domain name for Redis e.g. redis.<domain>"
 }

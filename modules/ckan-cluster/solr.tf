@@ -78,39 +78,35 @@ resource "aws_ecs_task_definition" "solr" {
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
   task_role_arn            = aws_iam_role.ecsTaskExecutionRole.arn
-  container_definitions    = <<DEFINITION
-  [
-  {
-    "logConfiguration": {
-      "logDriver": "awslogs",
-      "options": {
-        "awslogs-group": "${aws_cloudwatch_log_group.solr.name}",
-        "awslogs-region": "${var.aws_region}",
-        "awslogs-stream-prefix": "ecs"
-      }
-    },
-    "portMappings": [
+  container_definitions    = jsonencode([
+    name = "solr"
+    image = "nathstevo97/ckan-solr:latest"
+    essential = true
+    memory = 4096
+    memoryReservation = 1024
+    cpu = 2048
+    portMappings = [
       {
-        "hostPort": 8983,
-        "protocol": "tcp",
-        "containerPort": 8983
+        hostPort = 8983
+        protocol = "tcp"
+        containerPort = 8983
       }
-    ],
-    "cpu": 2048,
-    "memory": 4096,
-    "memoryReservation": 1024,
-    "mountPoints": [
-        {
-        "containerPath": "/opt/solr/server/solr/ckan/data",
-        "sourceVolume": "efs-solr"
-        }
-    ],
-    "image": "ckan/ckan-solr:2.9-solr8",
-    "essential": true,
-    "name": "solr"
+    ]
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        awslogs-group         = "${aws_cloudwatch_log_group.solr.name}"
+        awslogs-region        = "${var.aws_region}"
+        awslogs-stream-prefix = "ecs"
+      }
     }
-  ]
-  DEFINITION
+    mountPoints = [
+      {
+        containerPath = "/opt/solr/server/solr/ckan/data"
+        sourceVolume  = "efs-solr"
+      }
+    ]
+  ])
 
   volume {
     name = "efs-solr"

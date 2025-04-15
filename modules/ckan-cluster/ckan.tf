@@ -78,97 +78,95 @@ resource "aws_ecs_task_definition" "ckan" {
   memory                = 4096
   execution_role_arn    = aws_iam_role.ecsTaskExecutionRole.arn
   task_role_arn         = aws_iam_role.ecsTaskExecutionRole.arn
-  container_definitions = <<DEFINITION
-  [
-  {
-    "logConfiguration": {
-      "logDriver": "awslogs",
-      "secretOptions": null,
-      "options": {
-         "awslogs-group": "${aws_cloudwatch_log_group.ckan.name}",
-        "awslogs-region": "${var.aws_region}",
-        "awslogs-stream-prefix": "ecs"
+  container_definitions = jsonencode([
+    name = "ckan"
+    image = "nathstevo97/ckan:latest"
+    essential = true
+    logConfiguration = {
+      logDriver = "awslogs"
+      secretOptions = null
+      options = {
+        "awslogs-group"         = "${aws_cloudwatch_log_group.ckan.name}",
+        "awslogs-region"       = "${var.aws_region}",
+        "awslogs-stream-prefix" = "ecs"
       }
-    },
-    "portMappings": [
-      {
-        "protocol": "tcp",
-        "containerPort": 5000,
-        "hostPort": 5000
-      }
-    ],
-    "cpu": 2048,
-    "environment": [
-      {
-        "name": "CKAN_SITE_URL",
-        "value": "https://${var.ckan_url}"
-      },
-      {
-        "name": "SESSION_SECRET",
-        "value": "string:CHANGE_ME"
-      },
-      {
-        "name": "CKAN_API_TOKEN_SECRET",
-        "value": "string:CHANGE_ME"
-      },
-      {
-        "name": "POSTGRES_DB",
-        "value": "${var.rds_database_name}"
-      },
-      {
-        "name": "POSTGRES_USER",
-        "value": "${var.rds_database_username}"
-      },
-      {
-        "name": "POSTGRES_PASSWORD",
-        "value": "${var.rds_database_password}"
-      },
-      {
-        "name": "POSTGRES_FQDN",
-        "value": "${var.postgres_url}"
-      },
-      {
-        "name": "DATASTORE_DB",
-        "value": "${var.rds_readonly_database_name}"
-      },
-      {
-        "name": "DATASTORE_ROLENAME",
-        "value": "${var.rds_readonly_database_user}"
-      },
-      {
-        "name": "DATASTORE_PASSWORD",
-        "value": "${var.rds_readonly_database_password}"
-      },
-      {
-        "name": "REDIS_FQDN",
-        "value": "${var.redis_url}"
-      },
-      {
-        "name": "SOLR_CORE_NAME",
-        "value": "ckan"
-      },
-      {
-        "name": "SOLR_FQDN",
-        "value": "${aws_service_discovery_service.solr.name}.${aws_service_discovery_private_dns_namespace.ckan-infrastructure.name}"
-      },
-      {
-        "name": "DATAPUSHER_FQDN",
-        "value": "${aws_service_discovery_service.datapusher.name}.${aws_service_discovery_private_dns_namespace.ckan-infrastructure.name}"
-      }
-    ],
-    "memory": 4096,
-    "memoryReservation": 512,
-    "mountPoints": [
-      {
-        "containerPath": "/var/lib/ckan",
-        "sourceVolume": "efs-ckan-storage"
-      }
-    ],
-    "image": "nathstevo97/ckan:20231122",
-    "name": "ckan"
     }
-  ]
-  DEFINITION
+    portMappings = [
+      {
+        hostPort = 5000,
+        protocol = "tcp",
+        containerPort = 5000
+      }
+    ]
+    cpu = 2048,
+    memoryReservation = 512,
+    mountPoints = [
+      {
+        containerPath = "/var/lib/ckan",
+        sourceVolume  = "efs-ckan-storage"
+      }
+    ]
+    memory = 4096
+    environment = [
+      {
+        name = "CKAN_SITE_URL",
+        value = "https://${var.ckan_url}"
+      },
+      {
+        name = "SESSION_SECRET"
+        value = "string:CHANGE_ME"
+      },
+      {
+        name = "CKAN_API_TOKEN_SECRET"
+        value = "string:CHANGE_ME"
+      },
+      {
+        name = "POSTGRES_DB",
+        value = "${var.rds_database_name}"
+      },
+      {
+        name = "POSTGRES_USER",
+        value = "${var.rds_database_username}"
+      },
+      {
+        name = "POSTGRES_PASSWORD",
+        value = "${var.rds_database_password}"
+      },
+      {
+        name = "POSTGRES_FQDN",
+        value = "${var.postgres_url}"
+      },
+      {
+        name = "DATASTORE_DB",
+        value = "${var.rds_readonly_database_name}"
+      },
+      {
+        name = "DATASTORE_ROLENAME",
+        value = "${var.rds_readonly_database_user}"
+      },
+      {
+        name = "DATASTORE_PASSWORD",
+        value = "${var.rds_readonly_database_password}"
+      },
+      {
+        name = "REDIS_FQDN",
+        value = "${var.redis_url}"
+      },
+      {
+        name = "SOLR_CORE_NAME",
+        value = "ckan"
+      },
+      {
+        name = "SOLR_FQDN",
+        value = "${aws_service_discovery_service.solr.name}.${aws_service_discovery_private_dns_namespace.ckan-infrastructure.name}"
+      },
+      {
+        name = "DATAPUSHER_FQDN",
+        value = "${aws_service_discovery_service.datapusher.name}.${aws_service_discovery_private_dns_namespace.ckan-infrastructure.name}"
+      }
+    ]
+  ])
+
   volume {
     name = "efs-ckan-storage"
 
@@ -181,5 +179,4 @@ resource "aws_ecs_task_definition" "ckan" {
   network_mode = "awsvpc"
 
   depends_on = [aws_cloudwatch_log_group.ckan, module.ecs]
-
 }

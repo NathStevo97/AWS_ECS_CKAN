@@ -62,7 +62,7 @@ module "vpc" {
 module "postgres" {
   source                  = "./modules/postgres"
   resource_name_prefix    = var.resource_name_prefix
-  postgres_url            = "postgres.${var.domain_name}"
+  domain_name             = var.domain_name
   hosted_zone_id          = var.hosted_zone_id
   vpc_id                  = module.vpc.vpc_id
   private_subnet_ids_list = module.vpc.private_subnets
@@ -78,7 +78,7 @@ module "postgres" {
 module "redis" {
   source                  = "./modules/redis"
   resource_name_prefix    = var.resource_name_prefix
-  redis_url               = "redis.${var.domain_name}"
+  domain_name             = var.domain_name
   hosted_zone_id          = var.hosted_zone_id
   vpc_id                  = module.vpc.vpc_id
   private_subnet_ids_list = module.vpc.private_subnets
@@ -95,6 +95,7 @@ module "redis" {
 #   public_subnet_ids_list         = module.vpc.public_subnets
 #   private_subnet_ids_list        = module.vpc.private_subnets
 #   allowed_cidr_blocks            = [var.vpc_cidr, var.admin_cidr_blocks]
+#   domain_name                    = var.domain_name
 #   postgres_url                   = "postgres.${var.domain_name}"
 #   redis_url                      = "redis.${var.domain_name}"
 #   ckan_url                       = "ckan.${var.domain_name}"

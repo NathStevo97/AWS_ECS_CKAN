@@ -21,7 +21,7 @@ variable "rds_database_username" {
   type        = string
   description = "Base username for Postgres RDS"
 }
-variable "postgres_url" {
+variable "domain_name" {
   type        = string
   description = "Domain name for Database e.g. postgres.<domain name>"
 }

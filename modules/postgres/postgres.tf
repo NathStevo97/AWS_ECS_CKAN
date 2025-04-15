@@ -58,8 +58,9 @@ module "rds" {
 
 # dns
 resource "aws_route53_record" "postgres" {
+  count   = var.domain_name != "" ? 1 : 0
   zone_id = var.hosted_zone_id
-  name    = var.postgres_url
+  name    = "postgres.${var.domain_name}"
   type    = "CNAME"
   ttl     = "300"
   records = [module.rds.db_instance_address]

@@ -28,8 +28,9 @@ resource "aws_elasticache_cluster" "redis" {
 
 # dns
 resource "aws_route53_record" "redis" {
+  count   = var.domain_name != "" ? 1 : 0
   zone_id = var.hosted_zone_id
-  name    = var.redis_url
+  name    = "redis.${var.domain_name}"
   type    = "CNAME"
   ttl     = "300"
   records = [aws_elasticache_cluster.redis.cache_nodes[0].address]
