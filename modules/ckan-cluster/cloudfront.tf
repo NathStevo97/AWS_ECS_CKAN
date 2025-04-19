@@ -7,7 +7,7 @@ data "aws_cloudfront_origin_request_policy" "all_viewer" {
 }
 
 resource "aws_cloudfront_distribution" "distribution" {
-  aliases = var.domain_name != "" ? ["ckan.${var.domain_name}"] : []
+  aliases          = var.domain_name != "" ? ["ckan.${var.domain_name}"] : []
   comment          = "CKAN"
   enabled          = true
   http_version     = "http2"
@@ -586,7 +586,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     acm_certificate_arn            = null
     cloudfront_default_certificate = var.domain_name == ""
     minimum_protocol_version       = var.domain_name != "" ? "TLSv1.1_2016" : "TLSv1"
-    ssl_support_method            = var.domain_name != "" ? "sni-only" : null
+    ssl_support_method             = var.domain_name != "" ? "sni-only" : null
   }
 
   depends_on = [

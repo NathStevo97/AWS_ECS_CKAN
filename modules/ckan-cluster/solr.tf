@@ -81,7 +81,7 @@ resource "aws_ecs_task_definition" "solr" {
   container_definitions = jsonencode([
     {
       name      = "solr"
-      image     = "nathstevo97/ckan-solr:ac193805abc840135b9797126036d9480e6d9630"
+      image     = "nathstevo97/ckan-solr"
       essential = true
       memory    = 4096
       cpu       = 2048
