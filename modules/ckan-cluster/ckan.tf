@@ -87,8 +87,8 @@ resource "aws_ecs_task_definition" "ckan" {
         logDriver     = "awslogs"
         secretOptions = null
         options = {
-          "awslogs-group"         = "${aws_cloudwatch_log_group.ckan.name}",
-          "awslogs-region"        = "${var.aws_region}",
+          "awslogs-group"         = aws_cloudwatch_log_group.ckan.name,
+          "awslogs-region"        = var.aws_region,
           "awslogs-stream-prefix" = "ecs"
         }
       }
@@ -123,35 +123,35 @@ resource "aws_ecs_task_definition" "ckan" {
         },
         {
           name  = "POSTGRES_DB",
-          value = "${var.rds_database_name}"
+          value = var.rds_database_name
         },
         {
           name  = "POSTGRES_USER",
-          value = "${var.rds_database_username}"
+          value = var.rds_database_username
         },
         {
           name  = "POSTGRES_PASSWORD",
-          value = "${var.rds_database_password}"
+          value = var.rds_database_password
         },
         {
           name  = "POSTGRES_FQDN",
-          value = "${var.postgres_url}"
+          value = var.postgres_url
         },
         {
           name  = "DATASTORE_DB",
-          value = "${var.rds_readonly_database_name}"
+          value =  var.rds_readonly_database_name
         },
         {
           name  = "DATASTORE_ROLENAME",
-          value = "${var.rds_readonly_database_user}"
+          value = var.rds_readonly_database_user
         },
         {
           name  = "DATASTORE_PASSWORD",
-          value = "${var.rds_readonly_database_password}"
+          value = var.rds_readonly_database_password
         },
         {
           name  = "REDIS_FQDN",
-          value = "${var.redis_url}"
+          value = var.redis_url
         },
         {
           name  = "SOLR_CORE_NAME",

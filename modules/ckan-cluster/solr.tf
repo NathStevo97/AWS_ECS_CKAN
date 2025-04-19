@@ -95,8 +95,8 @@ resource "aws_ecs_task_definition" "solr" {
       logConfiguration = {
         logDriver = "awslogs"
         options = {
-          awslogs-group         = "${aws_cloudwatch_log_group.solr.name}"
-          awslogs-region        = "${var.aws_region}"
+          awslogs-group         = aws_cloudwatch_log_group.solr.name
+          awslogs-region        = var.aws_region
           awslogs-stream-prefix = "ecs"
         }
       }
