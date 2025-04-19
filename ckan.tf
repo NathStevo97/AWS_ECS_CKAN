@@ -96,9 +96,9 @@ module "ckan-cluster" {
   private_subnet_ids_list        = module.vpc.private_subnets
   allowed_cidr_blocks            = [var.vpc_cidr, var.admin_cidr_blocks]
   domain_name                    = var.domain_name
-  postgres_url                   = "postgres.${var.domain_name}"
-  redis_url                      = "redis.${var.domain_name}"
-  ckan_url                       = "ckan.${var.domain_name}"
+  postgres_url                   = var.domain_name != "" ? "postgres.${var.domain_name}" : module.postgres.db_instance_address
+  redis_url                      = var.domain_name != "" ? "redis.${var.domain_name}" : module.redis.redis-address
+  #ckan_url                       = "ckan.${var.domain_name}"
   aws_region                     = var.region
   rds_database_name              = var.rds_database_name
   rds_database_password          = var.rds_database_password

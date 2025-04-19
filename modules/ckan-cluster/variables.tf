@@ -43,9 +43,14 @@ variable "postgres_url" {
   description = "Postgres FQDN e.g. db.<domain name>"
 }
 
-variable "ckan_url" {
-  type        = string
-  description = "CKAN FQDN e.g. ckan.<domain name>"
+# variable "ckan_url" {
+#   type        = string
+#   description = "CKAN FQDN e.g. ckan.<domain name>"
+# }
+
+variable "domain_name" {
+  type    = string
+  default = ""
 }
 
 variable "rds_database_name" {

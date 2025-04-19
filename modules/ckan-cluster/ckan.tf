@@ -81,7 +81,7 @@ resource "aws_ecs_task_definition" "ckan" {
   container_definitions = jsonencode([
     {
       name      = "ckan"
-      image     = "nathstevo97/ckan:latest"
+      image     = "nathstevo97/ckan:ac193805abc840135b9797126036d9480e6d9630"
       essential = true
       logConfiguration = {
         logDriver     = "awslogs"
@@ -110,8 +110,8 @@ resource "aws_ecs_task_definition" "ckan" {
       memory = 4096
       environment = [
         {
-          name  = "CKAN_SITE_URL",
-          value = "https://${var.ckan_url}"
+          name  = "CKAN_SITE_URL"
+          value = var.domain_name != "" ? "https://ckan.${var.domain_name}" : "http://${aws_alb.application-load-balancer.dns_name}"
         },
         {
           name  = "SESSION_SECRET"

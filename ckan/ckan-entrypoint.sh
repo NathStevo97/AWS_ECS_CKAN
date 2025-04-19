@@ -103,31 +103,34 @@ envsubst < $CKAN_INI_UNCONFIGURED > $CKAN_INI
 
 if [ "$BYPASS_INIT" != "1" ]; then
 ## create the datastore_user if it does not exist
-  read rolname <<< `psql -X "$CKAN_SQLALCHEMY_URL" --single-transaction --set ON_ERROR_STOP=1 --no-align -t --field-separator ' ' --quiet -c "SELECT rolname FROM pg_catalog.pg_roles WHERE rolname = '$DATASTORE_ROLENAME'"`
+  read rolname <<< `psql -h $POSTGRES_FQDN -U $POSTGRES_USER "$CKAN_SQLALCHEMY_URL" --single-transaction --set ON_ERROR_STOP=1 --no-align -t --field-separator ' ' --quiet -c "SELECT rolname FROM pg_catalog.pg_roles WHERE rolname = '$DATASTORE_ROLENAME'"`
   if [ "${rolname}" != "${DATASTORE_ROLENAME}" ]; then
     echo "Creating Datastore User/Role: $DATASTORE_ROLENAME"
-    psql "$CKAN_SQLALCHEMY_URL" -c "CREATE ROLE ${DATASTORE_ROLENAME} NOSUPERUSER NOCREATEDB NOCREATEROLE LOGIN PASSWORD '${DATASTORE_PASSWORD}'" > /dev/null 2>&1
+    psql -h $POSTGRES_FQDN -U $POSTGRES_USER "$CKAN_SQLALCHEMY_URL" -c "CREATE ROLE ${DATASTORE_ROLENAME} NOSUPERUSER NOCREATEDB NOCREATEROLE LOGIN PASSWORD '${DATASTORE_PASSWORD}'" > /dev/null 2>&1
     echo "Datastore User/Role was created"
   else
     echo "Datastore User/Role already exists"
   fi
+
 ## create the datastore database if it does not exists
-  read datname <<< `psql -X "$CKAN_SQLALCHEMY_URL" --single-transaction --set ON_ERROR_STOP=1 --no-align -t --field-separator ' ' --quiet -c "SELECT datname FROM pg_catalog.pg_database WHERE datname = '$DATASTORE_DB'"`
+  read datname <<< `psql -h $POSTGRES_FQDN -U $POSTGRES_USER "$CKAN_SQLALCHEMY_URL" --single-transaction --set ON_ERROR_STOP=1 --no-align -t --field-separator ' ' --quiet -c "SELECT datname FROM pg_catalog.pg_database WHERE datname = '$DATASTORE_DB'"`
   if [ "${datname}" != "datastore" ]; then
     echo "Creating Database Catalog: $DATABASE_DB"
-    psql "$CKAN_SQLALCHEMY_URL" -c "CREATE DATABASE ${DATASTORE_DB} OWNER ${POSTGRES_USER} ENCODING 'utf-8'" > /dev/null 2>&1
-    psql "$CKAN_SQLALCHEMY_URL" -c "GRANT ALL PRIVILEGES ON DATABASE ${DATASTORE_DB} TO ${POSTGRES_USER}" > /dev/null 2>&1
+    psql -h $POSTGRES_FQDN -U $POSTGRES_USER "$CKAN_SQLALCHEMY_URL" -c "CREATE DATABASE ${DATASTORE_DB} OWNER ${POSTGRES_USER} ENCODING 'utf-8'" > /dev/null 2>&1
+    psql -h $POSTGRES_FQDN -U $POSTGRES_USER "$CKAN_SQLALCHEMY_URL" -c "GRANT ALL PRIVILEGES ON DATABASE ${DATASTORE_DB} TO ${POSTGRES_USER}" > /dev/null 2>&1
     echo "Database Catalog $DATABASE_DB was created"
   else
     echo "Database Catalog $DATABASE_DB already exists"
   fi
+
 # Initialize the Postgres Database
   echo "Databases Initializing"
   ckan db init > /dev/null
   echo "Database Initialization Complete"
+
 # Set the Postgres Datastore Database Permissions
   echo "Datastore Permissions Initializing"
-  ckan datastore set-permissions | psql "$CKAN_DATASTORE_WRITE_URL" --set ON_ERROR_STOP=1 > /dev/null
+  ckan datastore set-permissions | psql -h $POSTGRES_FQDN -U $POSTGRES_USER "$CKAN_DATASTORE_WRITE_URL" --set ON_ERROR_STOP=1 > /dev/null
   echo "Datastore Permissions Initialzation Complete"
 fi
 

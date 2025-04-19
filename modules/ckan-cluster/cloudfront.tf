@@ -7,7 +7,7 @@ data "aws_cloudfront_origin_request_policy" "all_viewer" {
 }
 
 resource "aws_cloudfront_distribution" "distribution" {
-  aliases          = [var.ckan_url]
+  aliases = var.domain_name != "" ? ["ckan.${var.domain_name}"] : []
   comment          = "CKAN"
   enabled          = true
   http_version     = "http2"
@@ -58,11 +58,11 @@ resource "aws_cloudfront_distribution" "distribution" {
     }
   }
 
-  logging_config {
-    bucket          = aws_s3_bucket.cloudfront_logs.bucket_domain_name
-    include_cookies = true
-    prefix          = "cloudfront/"
-  }
+  # logging_config {
+  #   bucket          = aws_s3_bucket.cloudfront_logs.bucket_domain_name
+  #   include_cookies = true
+  #   prefix          = "cloudfront/"
+  # }
 
   ordered_cache_behavior {
     allowed_methods = [
@@ -582,16 +582,22 @@ resource "aws_cloudfront_distribution" "distribution" {
   }
 
   viewer_certificate {
-    acm_certificate_arn            = aws_acm_certificate.ckan_certificate.arn
-    cloudfront_default_certificate = false
-    minimum_protocol_version       = "TLSv1.1_2016"
-    ssl_support_method             = "sni-only"
+    #acm_certificate_arn            = var.domain_name != "" ? aws_acm_certificate.ckan_certificate[0].arn : null
+    acm_certificate_arn            = null
+    cloudfront_default_certificate = var.domain_name == ""
+    minimum_protocol_version       = var.domain_name != "" ? "TLSv1.1_2016" : "TLSv1"
+    ssl_support_method            = var.domain_name != "" ? "sni-only" : null
   }
+
+  depends_on = [
+    aws_s3_bucket.cloudfront_logs,
+  ]
 }
 
 resource "aws_route53_record" "route-to-cloudfront" {
+  count   = var.domain_name != "" ? 1 : 0
   zone_id = data.aws_route53_zone.zone.zone_id
-  name    = var.ckan_url
+  name    = "ckan.${var.domain_name}"
   type    = "A"
 
   alias {
@@ -601,41 +607,46 @@ resource "aws_route53_record" "route-to-cloudfront" {
   }
 }
 
-resource "aws_route53_record" "ckan_cloudfront_validation_record" {
-  for_each = {
-    for dvo in aws_acm_certificate.ckan_certificate.domain_validation_options : dvo.domain_name => {
-      name   = dvo.resource_record_name
-      record = dvo.resource_record_value
-      type   = dvo.resource_record_type
-    }
-  }
+# resource "aws_route53_record" "ckan_cloudfront_validation_record" {
+#   for_each = {
+#     for dvo in aws_acm_certificate.ckan_certificate[0].domain_validation_options : dvo.domain_name => {
+#       name   = dvo.resource_record_name
+#       record = dvo.resource_record_value
+#       type   = dvo.resource_record_type
+#     }
+#   }
 
-  zone_id = var.hosted_zone_id
-  name    = each.value.name
-  records = [each.value.record]
-  type    = each.value.type
-  ttl     = 60
-}
+#   zone_id = var.hosted_zone_id
+#   name    = each.value.name
+#   records = [each.value.record]
+#   type    = each.value.type
+#   ttl     = 60
 
-resource "aws_acm_certificate" "ckan_certificate" {
-  provider          = aws.us_east
-  domain_name       = var.ckan_url
-  validation_method = "DNS"
+#   depends_on = [
+#     aws_acm_certificate.ckan_certificate,
+#   ]
+# }
 
-  lifecycle {
-    create_before_destroy = true
-  }
-}
+# resource "aws_acm_certificate" "ckan_certificate" {
+#   provider          = aws.us_east
+#   domain_name       = "ckan.${var.domain_name}"
+#   validation_method = "DNS"
 
-resource "aws_acm_certificate_validation" "certificate_validation" {
-  provider                = aws.us_east
-  certificate_arn         = aws_acm_certificate.ckan_certificate.arn
-  validation_record_fqdns = [for record in aws_route53_record.ckan_cloudfront_validation_record : record.fqdn]
-}
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+# }
+
+# resource "aws_acm_certificate_validation" "certificate_validation" {
+#   count             = var.domain_name != "" ? 1 : 0
+#   provider                = aws.us_east
+#   certificate_arn         = aws_acm_certificate.ckan_certificate[0].arn
+#   validation_record_fqdns = [for record in aws_route53_record.ckan_cloudfront_validation_record : record.fqdn]
+# }
 
 
 resource "aws_s3_bucket" "cloudfront_logs" {
-  bucket        = "${var.ckan_url}-cloudfront-logs"
+  bucket        = "ckan-poc-cloudfront-logs"
   force_destroy = true
   lifecycle {
     ignore_changes = [

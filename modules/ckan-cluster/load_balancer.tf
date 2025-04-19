@@ -141,6 +141,7 @@ resource "aws_alb_target_group" "ckan-http" {
 }
 
 resource "aws_alb_listener" "ckan-https" {
+  count             = var.domain_name != "" ? 1 : 0
   load_balancer_arn = aws_alb.application-load-balancer.id
   port              = "443"
   protocol          = "HTTPS"
