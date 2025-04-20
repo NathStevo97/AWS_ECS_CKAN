@@ -41,8 +41,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -82,8 +81,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -119,8 +117,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -155,8 +152,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -191,8 +187,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -225,8 +220,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -259,8 +253,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -293,8 +286,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -335,8 +327,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id         = "ckan"
     trusted_key_groups       = []
     trusted_signers          = []
-    viewer_protocol_policy   = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
   }
 
   ordered_cache_behavior {
@@ -357,8 +348,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -393,8 +383,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -429,8 +418,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -465,8 +453,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -501,8 +488,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -537,8 +523,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "ckan"
     trusted_key_groups     = []
     trusted_signers        = []
-    viewer_protocol_policy = "redirect-to-https"
-    #viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.domain_name != "" ? "redirect-to-https" : "allow-all"
 
     forwarded_values {
       headers = [
@@ -566,7 +551,7 @@ resource "aws_cloudfront_distribution" "distribution" {
       http_port                = 80
       https_port               = 443
       origin_keepalive_timeout = 5
-      origin_protocol_policy   = "https-only"
+      origin_protocol_policy   = var.domain_name != "" ? "https-only" : "http-only"
       origin_read_timeout      = 60
       origin_ssl_protocols = [
         "TLSv1.2",
@@ -646,7 +631,7 @@ resource "aws_route53_record" "route-to-cloudfront" {
 
 
 resource "aws_s3_bucket" "cloudfront_logs" {
-  bucket        = "ckan-poc-cloudfront-logs"
+  bucket        = "${var.resource_name_prefix}-cloudfront-logs"
   force_destroy = true
   lifecycle {
     ignore_changes = [

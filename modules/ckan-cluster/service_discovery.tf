@@ -21,6 +21,10 @@ resource "aws_service_discovery_service" "datapusher" {
   health_check_custom_config {
     failure_threshold = 10
   }
+
+  depends_on = [
+    aws_ecs_task_definition.datapusher,
+  ]
 }
 
 resource "aws_service_discovery_service" "solr" {
@@ -40,6 +44,10 @@ resource "aws_service_discovery_service" "solr" {
   health_check_custom_config {
     failure_threshold = 10
   }
+
+  depends_on = [
+    aws_ecs_task_definition.solr,
+  ]
 }
 
 resource "aws_service_discovery_service" "ckan" {
@@ -59,4 +67,8 @@ resource "aws_service_discovery_service" "ckan" {
   health_check_custom_config {
     failure_threshold = 10
   }
+
+  depends_on = [
+    aws_ecs_task_definition.ckan,
+  ]
 }
