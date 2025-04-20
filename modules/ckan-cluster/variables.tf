@@ -80,3 +80,8 @@ variable "rds_readonly_database_password" {
 variable "lb_acm_certificate_arn" {
   type = string
 }
+
+variable "vpc_cidr" {
+  type        = string
+  description = "VPC CIDR block"
+}

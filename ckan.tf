@@ -100,11 +100,12 @@ module "ckan-cluster" {
   redis_url               = var.domain_name != "" ? "redis.${var.domain_name}" : module.redis.redis-address
   #ckan_url                       = "ckan.${var.domain_name}"
   aws_region                     = var.region
-  rds_database_name              = var.rds_database_name
+  rds_database_name              = module.postgres.db_instance_name
   rds_database_password          = var.rds_database_password
   rds_database_username          = var.rds_database_username
   rds_readonly_database_name     = var.rds_readonly_database_name
   rds_readonly_database_password = var.rds_readonly_database_password
   rds_readonly_database_user     = var.rds_readonly_database_user
   lb_acm_certificate_arn         = var.lb_acm_certificate_arn
+  vpc_cidr                    = var.vpc_cidr
 }

@@ -81,7 +81,7 @@ resource "aws_ecs_task_definition" "ckan" {
   container_definitions = jsonencode([
     {
       name      = "ckan"
-      image     = "nathstevo97/ckan"
+      image     = "nathstevo97/ckan:latest"
       essential = true
       logConfiguration = {
         logDriver     = "awslogs"

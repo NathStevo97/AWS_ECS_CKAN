@@ -24,7 +24,7 @@ module "rds" {
   final_snapshot_identifier_prefix = "${var.resource_name_prefix}-final"
   skip_final_snapshot              = true
 
-  identifier = var.resource_name_prefix
+  identifier = "${var.resource_name_prefix}-db"
 
   # instance
   deletion_protection = false
@@ -41,10 +41,14 @@ module "rds" {
   port                   = 5432
 
   # credentials
+  manage_master_user_password = false
   password = var.rds_database_password
   username = var.rds_database_username
-  # update module has create_random_password set to true, which we do not want.
-  # create_random_password = false
+  parameters = [{
+    # not recommended for production, but for testing purposes it's fine
+    name = "rds.force_ssl"
+    value = "0"
+  }]
 
   # networking
   subnet_ids             = var.private_subnet_ids_list

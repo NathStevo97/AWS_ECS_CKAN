@@ -75,7 +75,7 @@ resource "aws_ecs_task_definition" "datapusher" {
   container_definitions = jsonencode([
     {
       name              = "datapusher"
-      image             = "nathstevo97/ckan-datapusher"
+      image             = "nathstevo97/ckan-datapusher:latest"
       cpu               = 1024
       memory            = 2048
       memoryReservation = 128
