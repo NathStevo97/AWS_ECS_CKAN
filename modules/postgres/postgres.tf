@@ -42,11 +42,11 @@ module "rds" {
 
   # credentials
   manage_master_user_password = false
-  password = var.rds_database_password
-  username = var.rds_database_username
+  password                    = var.rds_database_password
+  username                    = var.rds_database_username
   parameters = [{
     # not recommended for production, but for testing purposes it's fine
-    name = "rds.force_ssl"
+    name  = "rds.force_ssl"
     value = "0"
   }]
 

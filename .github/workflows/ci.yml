@@ -189,7 +189,7 @@ jobs:
     - name: Docker Build - Solr
       id: build-Solr
       run: |
-        docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan-solr:${{ github.sha }} ./ckan-solr
+        docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ckan-solr:latest ./ckan-solr
 
     - name: Run Trivy - Solr
       uses: aquasecurity/trivy-action@0.30.0

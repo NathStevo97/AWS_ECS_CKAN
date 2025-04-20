@@ -139,7 +139,7 @@ resource "aws_ecs_task_definition" "ckan" {
         },
         {
           name  = "DATASTORE_DB",
-          value =  var.rds_readonly_database_name
+          value = var.rds_readonly_database_name
         },
         {
           name  = "DATASTORE_ROLENAME",
