@@ -107,5 +107,4 @@ module "ckan-cluster" {
   rds_readonly_database_password = var.rds_readonly_database_password
   rds_readonly_database_user     = var.rds_readonly_database_user
   lb_acm_certificate_arn         = var.lb_acm_certificate_arn
-  vpc_cidr                       = var.vpc_cidr
 }

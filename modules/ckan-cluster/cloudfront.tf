@@ -15,7 +15,7 @@ resource "aws_cloudfront_distribution" "distribution" {
   price_class      = "PriceClass_100"
   retain_on_delete = false
   tags = {
-    "Name" = "ckan-cloudfront"
+    "Name" = "${var.resource_name_prefix}-cloudfront"
   }
   wait_for_deployment = true
 
