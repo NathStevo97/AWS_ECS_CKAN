@@ -133,7 +133,7 @@ typing-extensions==4.12.2
     #   -r requirements.in
     #   alembic
     #   sqlalchemy
-tzlocal==5.2
+tzlocal==5.3.1
     # via -r requirements.in
 urllib3==2.2.3
     # via requests
