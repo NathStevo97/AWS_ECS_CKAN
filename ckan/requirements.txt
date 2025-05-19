@@ -104,7 +104,7 @@ python-dateutil==2.9.0.post0
     #   feedgen
 python-magic==0.4.27
     # via -r requirements.in
-pytz==2024.2
+pytz==2025.2
     # via
     #   -r requirements.in
     #   flask-babel
