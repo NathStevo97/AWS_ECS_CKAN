@@ -84,7 +84,7 @@ RUN ckan-pip install -e 'git+https://github.com/ckan/ckanext-pages.git#egg=ckane
 # Override robots.txt
 #RUN cp $CKAN_SRC/tmp/robots.txt $CKAN_SRC/ckan/public/robots.txt
 
-RUN pip install setuptools==75.0.0
+RUN pip install setuptools==78.1.1
 
 # customize container entrypoint that will configure the application
 COPY ckan-entrypoint.sh /ckan-entrypoint.sh
@@ -97,4 +97,3 @@ ENV CKAN_PORT=5000
 
 ENTRYPOINT ["/ckan-entrypoint.sh"]
 CMD ["bash", "-c", "ckan run --host 0.0.0.0 --port $CKAN_PORT --threaded"]
-
