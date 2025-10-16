@@ -2,5 +2,5 @@ argparse
 ckanserviceprovider==1.2.0
 messytables==0.15.2
 certifi
-requests[security]==2.32.4
+requests[security]==2.32.5
 setuptools==78.1.1
